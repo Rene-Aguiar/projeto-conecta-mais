@@ -13,7 +13,11 @@ Plataforma inclusiva de encontros e conexões para PCD (Pessoas com Deficiência
 ---
 
 ## 🚀 Sobre o Projeto
-O **Conecta+** tem como objetivo promover a inclusão social e o acesso a conexões seguras e acessíveis para pessoas com deficiência. O sistema conta com recursos de acessibilidade visual (Validação WCAG), formulários interativos estruturados com validação via JavaScript e persistência de dados local (`localStorage`).
+O **Conecta+** é uma plataforma digital desenvolvida com o propósito de aproximar pessoas com deficiência (PCDs) e pessoas sem deficiência, criando um ambiente voltado à interação, à socialização e à construção de relacionamentos. O projeto surgiu da ideia de utilizar a tecnologia para promover a inclusão, mostrando que a internet pode ser um espaço de conexão entre pessoas, independentemente de suas condições físicas ou limitações.
+
+A plataforma busca oferecer um ambiente acessível e acolhedor, no qual os usuários possam conhecer novas pessoas, interagir e estabelecer conexões por meio de uma experiência digital simples e intuitiva. Sua proposta é diminuir barreiras sociais, incentivar a diversidade e proporcionar mais oportunidades de interação, valorizando as diferenças e o respeito.
+
+O desenvolvimento do Conecta+ envolve a criação de uma interface web, com foco na organização das informações, na experiência do usuário e na acessibilidade (padrões WCAG), além de persistência de dados local (`localStorage`). Dessa forma, o projeto une conhecimentos de Engenharia de Software, desenvolvimento frontend e UX/UI a uma proposta de impacto social, demonstrando como a tecnologia pode se tornar uma ferramenta de inclusão, aproximação e transformação social.
 
 ---
 
