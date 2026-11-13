@@ -1,0 +1,8 @@
+---
+description: Padrões de estilização CSS e Tailwind
+globs: **/*.css
+alwaysApply: false
+---
+# CSS e Design - Conecta+
+- O layout utiliza classes utilitárias do Tailwind CSS.
+- O arquivo estilo.css gerencia os temas de alto contraste (.high-contrast-dark, .high-contrast-yellow), tamanhos de fonte (.font-sm a .font-xl) e foco visível em elementos interativos.

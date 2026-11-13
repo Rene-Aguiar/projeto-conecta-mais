@@ -1,0 +1,9 @@
+---
+description: Padrões de HTML5 semântico e acessível no Conecta+
+globs: **/*.html
+alwaysApply: false
+---
+# HTML Semântico e Acessibilidade
+- Utilize tags semânticas (header, nav, main, section, footer).
+- Todas as tags de imagem (<img>) devem possuir o atributo alt descritivo.
+- Mantenha o atributo lang="pt-BR" na tag html e utilize atributos ARIA e papéis (role) quando necessário.

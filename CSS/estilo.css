@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Conecta+ - Estilos de Acessibilidade e Tema Customizado
+   ========================================================================== */
+
+/* Tema de Alto Contraste Escuro */
+.high-contrast-dark {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.high-contrast-dark * {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+/* Tema de Alto Contraste Amarelo e Preto */
+.high-contrast-yellow {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+}
+
+.high-contrast-yellow * {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+/* Ajustes Globais de Tamanho de Fonte para Acessibilidade */
+html.font-sm {
+    font-size: 14px !important;
+}
+
+html.font-md {
+    font-size: 16px !important;
+}
+
+html.font-lg {
+    font-size: 18px !important;
+}
+
+html.font-xl {
+    font-size: 20px !important;
+}
+
+/* Destaque Visual para Navegação Assistida por Teclado */
+a:focus, 
+button:focus, 
+input:focus, 
+select:focus, 
+textarea:focus { 
+    outline: 3px solid #f59e0b !important; 
+    outline-offset: 3px !important; 
+}
+
+/* Transição Suave entre Modos de Visualização */
+body {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conecta+ - Plataforma oficial de encontros, amizades e inclusão social para Pessoas com Deficiência (PCD).">
+    <title>Conecta+ | Amor, Amizade e Inclusão Sem Barreiras</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Folha de Estilos Externa -->
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        conecta: {
+                            purple: '#7e22ce',
+                            pink: '#db2777',
+                            blue: '#2563eb',
+                            amber: '#d97706'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- ATALHO DE ACESSIBILIDADE DE TECLADO (SCREEN READER SKIP LINK) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-amber-400 focus:text-slate-900 font-bold rounded-b-lg shadow-lg">
+        Ir para o conteúdo principal (Atalho Alt + 1)
+    </a>
+
+    <!-- BARRA DE FERRAMENTAS DE ACESSIBILIDADE FIXA NO TOPO -->
+    <div role="region" aria-label="Ferramentas de Acessibilidade Conecta+" class="bg-slate-900 text-white text-xs py-2.5 px-4 sticky top-0 z-50 border-b border-slate-700 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            
+            <!-- Controles de Tamanho de Fonte -->
+            <div class="flex items-center gap-2">
+                <span class="font-semibold text-slate-300 flex items-center gap-1">
+                    <i class="fa-solid fa-universal-access text-emerald-400" aria-hidden="true"></i> Acessibilidade:
+                </span>
+                <button onclick="changeFontSize('sm')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold border border-slate-600 transition cursor-pointer" aria-label="Tamanho de fonte pequeno">A-</button>
+                <button onclick="changeFontSize('md')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold border border-slate-600 transition cursor-pointer" aria-label="Tamanho de fonte normal">A</button>
+                <button onclick="changeFontSize('lg')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded font-bold border border-slate-600 transition cursor-pointer" aria-label="Tamanho de fonte grande">A+</button>
+            </div>
+
+            <!-- Modos de Contraste Funcionais -->
+            <div class="flex items-center gap-2">
+                <button onclick="setTheme('default')" id="theme-btn-default" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded border border-slate-600 transition font-medium cursor-pointer" aria-label="Modo Padrão">Padrão</button>
+                <button onclick="setTheme('dark-high')" id="theme-btn-dark" class="px-3 py-1 bg-black text-white hover:bg-slate-900 rounded border border-white font-bold transition cursor-pointer" aria-label="Alto Contraste Escuro">Escuro High</button>
+                <button onclick="setTheme('yellow-high')" id="theme-btn-yellow" class="px-3 py-1 bg-black text-yellow-300 hover:bg-slate-900 rounded border border-yellow-300 font-bold transition cursor-pointer" aria-label="Alto Contraste Amarelo e Preto">Amarelo/Preto</button>
+            </div>
+
+            <!-- Síntese de Voz e Atalhos -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTextToSpeech()" id="btn-tts" class="flex items-center gap-1.5 px-3.5 py-1 bg-purple-700 hover:bg-purple-600 text-white rounded-full font-bold transition shadow-sm cursor-pointer" aria-pressed="false">
+                    <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                    <span id="tts-label">Ler Página (Voz)</span>
+                </button>
+                <button onclick="showShortcutsModal()" class="text-slate-300 hover:text-white underline text-xs flex items-center gap-1 cursor-pointer">
+                    Atalhos <i class="fa-solid fa-keyboard" aria-hidden="true"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CABEÇALHO PRINCIPAL E NAVEGAÇÃO -->
+    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-[41px] z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo Conecta+ -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('inicio')">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 via-pink-500 to-rose-500 flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-heart-pulse text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black bg-gradient-to-r from-purple-700 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+                            Conecta<span class="text-pink-600">+</span>
+                        </span>
+                        <span class="block text-[10px] uppercase tracking-widest font-bold text-slate-500">Inclusão & Encontros</span>
+                    </div>
+                </div>
+
+                <!-- Menu Desktop -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Menu Principal">
+                    <button onclick="showPage('inicio')" id="nav-inicio" class="nav-btn px-3 py-2 rounded-lg font-bold text-sm transition text-purple-700 bg-purple-50 cursor-pointer">Início</button>
+                    <button onclick="showPage('amizades')" id="nav-amizades" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Amizades & Grupos</button>
+                    <button onclick="showPage('explorar')" id="nav-explorar" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Explorar</button>
+                    <button onclick="showPage('chats')" id="nav-chats" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition relative cursor-pointer">
+                        Chats <span class="bg-rose-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">3</span>
+                    </button>
+                    <button onclick="showPage('perfil')" id="nav-perfil" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Meu Perfil</button>
+                    <button onclick="showPage('eventos')" id="nav-eventos" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Eventos</button>
+                    <button onclick="showPage('locais')" id="nav-locais" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Locais Inclusivos</button>
+                    <button onclick="showPage('recursos')" id="nav-recursos" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Recursos</button>
+                    <button onclick="showPage('sobre')" id="nav-sobre" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Sobre Nós</button>
+                    <button onclick="showPage('planos')" id="nav-planos" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Planos</button>
+                    <button onclick="showPage('contato')" id="nav-contato" class="nav-btn px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 transition cursor-pointer">Contato</button>
+                </nav>
+
+                <!-- Botão Menu Mobile -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer" aria-label="Abrir Menu">
+                    <i class="fa-solid fa-bars text-xl" aria-hidden="true"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Menu Mobile Expansível -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <button onclick="showPage('inicio')" class="block w-full text-left px-3 py-2 rounded-md font-semibold text-purple-700 bg-purple-50">Início</button>
+            <button onclick="showPage('explorar')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Explorar</button>
+            <button onclick="showPage('chats')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Chats (3)</button>
+            <button onclick="showPage('perfil')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Meu Perfil</button>
+            <button onclick="showPage('eventos')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Eventos Inclusivos</button>
+            <button onclick="showPage('locais')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Locais Inclusivos</button>
+            <button onclick="showPage('recursos')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Recursos PCD</button>
+            <button onclick="showPage('sobre')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Sobre Nós</button>
+            <button onclick="showPage('planos')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Planos & Parcerias</button>
+            <button onclick="showPage('contato')" class="block w-full text-left px-3 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">Contato & Suporte</button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO DINÂMICO PRINCIPAL -->
+    <main id="main-content" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" tabindex="-1">
+
+        <!-- ================= PÁGINA 1: INÍCIO ================= -->
+        <section id="page-inicio" class="page-content space-y-10">
+            
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="max-w-3xl space-y-4 relative z-10">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold border border-purple-400/30">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i> Plataforma Conecta+ Verificada
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                        Conexões Reais, Amor sem Barreiras & Inclusão Social
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg">
+                        Encontre parceiros que compartilham das suas vivências, respeitam suas necessidades e valorizam quem você realmente é.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-700/60 text-center sm:text-left">
+                        <div><span class="block text-2xl font-black text-emerald-400">+18.500</span><span class="text-xs text-slate-400">Perfis Ativos PCD</span></div>
+                        <div><span class="block text-2xl font-black text-purple-400">9.200+</span><span class="text-xs text-slate-400">Matches Realizados</span></div>
+                        <div><span class="block text-2xl font-black text-pink-400">100%</span><span class="text-xs text-slate-400">Acessível (Libras/Voz)</span></div>
+                        <div><span class="block text-2xl font-black text-amber-400">520+</span><span class="text-xs text-slate-400">Locais Verificados</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros de Gênero -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-users text-purple-600"></i> Escolha quem você deseja conhecer
+                    </h2>
+                    <p class="text-xs text-slate-500">Alterne entre categorias para visualizar perfis específicos</p>
+                </div>
+
+                <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl w-full md:w-auto">
+                    <button onclick="filterGenderFeed('todos')" id="gender-btn-todos" class="gender-filter-btn flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm transition bg-white text-purple-700 shadow-sm cursor-pointer">Todos os Perfis</button>
+                    <button onclick="filterGenderFeed('Feminino')" id="gender-btn-feminino" class="gender-filter-btn flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm transition text-slate-600 hover:text-purple-700 cursor-pointer"><i class="fa-solid fa-venus text-pink-500 mr-1"></i> Mulheres</button>
+                    <button onclick="filterGenderFeed('Masculino')" id="gender-btn-masculino" class="gender-filter-btn flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm transition text-slate-600 hover:text-purple-700 cursor-pointer"><i class="fa-solid fa-mars text-blue-500 mr-1"></i> Homens</button>
+                </div>
+            </div>
+
+           <!-- CARD DE MATCH INTERATIVO COM PRÉVIA LATERAL -->
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="text-center mb-3">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Modo Descoberta Rápida</span>
+                </div>
+
+                <div class="flex items-center justify-center gap-4 relative overflow-hidden py-4">
+                    
+                    <!-- Prévia Esquerda (Pessoa Passada) -->
+                    <div id="prev-card-preview" class="hidden sm:block w-32 h-80 rounded-2xl overflow-hidden opacity-40 scale-95 transition-all duration-300 shadow-md relative bg-slate-300">
+                        <img id="prev-img" src="" class="w-full h-full object-cover filter grayscale">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xs font-bold p-2 text-center">Anterior</div>
+                    </div>
+
+                    <!-- CARD PRINCIPAL (Foco Central) -->
+                    <div id="swipe-card-container" class="bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden transition-all duration-300 relative w-full sm:w-[420px] z-10">
+                        <div class="relative h-96 w-full bg-slate-200">
+                            <img id="card-img" src="" alt="Foto do perfil" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+
+                            <div class="absolute top-4 left-4 right-4 flex justify-between items-center">
+                                <span id="card-disability-badge" class="bg-purple-600/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-purple-400/40">Deficiência</span>
+                                <span id="card-distance" class="bg-slate-900/80 backdrop-blur-md text-slate-200 text-xs font-medium px-3 py-1.5 rounded-full">Distância</span>
+                            </div>
+
+                            <button onclick="readProfileAudio()" class="absolute top-16 right-4 bg-white/90 hover:bg-white text-slate-800 p-2.5 rounded-full shadow-md text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer" aria-label="Ouvir áudio descrição da foto">
+                                <i class="fa-solid fa-volume-high text-purple-600"></i>
+                            </button>
+
+                            <div class="absolute bottom-4 left-6 right-6 text-white">
+                                <div class="flex items-baseline gap-2">
+                                    <h3 id="card-name-age" class="text-2xl font-black">Nome, Idade</h3>
+                                    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                                </div>
+                                <p id="card-city" class="text-slate-300 text-xs flex items-center gap-1 mt-1">Cidade, SP</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 space-y-3">
+                            <div>
+                                <h4 class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Sobre mim</h4>
+                                <p id="card-bio" class="text-slate-700 text-xs mt-1 leading-relaxed">Biografia...</p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-1.5">Comunicação Preferida</h4>
+                                <div id="card-tags" class="flex flex-wrap gap-1.5"></div>
+                            </div>
+
+                            <div class="pt-3 border-t border-slate-100 flex items-center justify-center gap-6">
+                                <button onclick="handleSwipe('pass')" class="w-12 h-12 rounded-full bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 flex items-center justify-center text-lg transition shadow-md border border-slate-200 cursor-pointer" aria-label="Passar Perfil"><i class="fa-solid fa-xmark"></i></button>
+                                <button onclick="handleSwipe('superlike')" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-amber-100 text-slate-500 hover:text-amber-500 flex items-center justify-center text-base transition shadow-md border border-slate-200 cursor-pointer" aria-label="Super Like"><i class="fa-solid fa-star"></i></button>
+                                <button onclick="handleSwipe('like')" class="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white flex items-center justify-center text-xl transition shadow-lg shadow-purple-500/30 cursor-pointer" aria-label="Curtir Perfil"><i class="fa-solid fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prévia Direita (Próxima Pessoa) -->
+                    <div id="next-card-preview" class="hidden sm:block w-32 h-80 rounded-2xl overflow-hidden opacity-40 scale-95 transition-all duration-300 shadow-md relative bg-slate-300">
+                        <img id="next-img" src="" class="w-full h-full object-cover filter grayscale">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xs font-bold p-2 text-center">Próximo(a)</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SEÇÕES DE DESTAQUE DE GÊNERO -->
+            <div id="section-fem-highlight" class="space-y-4 pt-6">
+                <h3 class="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2"><i class="fa-solid fa-venus text-pink-500"></i> Perfis Femininos em Destaque</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="grid-females"></div>
+            </div>
+
+            <div id="section-masc-highlight" class="space-y-4 pt-6">
+                <h3 class="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2"><i class="fa-solid fa-mars text-blue-500"></i> Perfis Masculinos em Destaque</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="grid-males"></div>
+            </div>
+
+        </section>
+        
+<!-- ================= PÁGINA: AMIZADES & GRUPOS ================= -->
+        <section id="page-amizades" class="page-content hidden space-y-8">
+            <div class="bg-gradient-to-r from-purple-800 to-pink-700 rounded-3xl p-8 text-white shadow-md space-y-3">
+                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full"><i class="fa-solid fa-people-group mr-1"></i> Comunidade Conecta+</span>
+                <h2 class="text-3xl font-black">Espaço de Amizades & Grupos de Interesse</h2>
+                <p class="text-purple-100 text-sm max-w-2xl">
+                    Conecte-se com pessoas que compartilham dos mesmos hobbies, cultura geek, esportes adaptados, literatura ou que simplesmente moram perto para trocar ideias e marcar passeios.
+                </p>
+            </div>
+
+            <!-- Categorias de Amizade -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-gamepad"></i></div>
+                    <h3 class="font-bold text-slate-900">Gamers & Tecnologia</h3>
+                    <p class="text-xs text-slate-600">Encontre parceiros para jogatinas online, Discord e troca de experiências tecnológicas.</p>
+                    <button onclick="alert('Você entrou no grupo de Gamers!')" class="text-xs font-bold text-purple-700 hover:underline cursor-pointer">Participar →</button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-book-open"></i></div>
+                    <h3 class="font-bold text-slate-900">Clube do Livro</h3>
+                    <p class="text-xs text-slate-600">Debates literários, audiolivros recomendados e encontros culturais inclusivos.</p>
+                    <button onclick="alert('Você entrou no Clube do Livro!')" class="text-xs font-bold text-purple-700 hover:underline cursor-pointer">Participar →</button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-person-biking"></i></div>
+                    <h3 class="font-bold text-slate-900">Esportes & Lazer</h3>
+                    <p class="text-xs text-slate-600">Organização de passeios em parques, ciclismo adaptado e caminhadas em turma.</p>
+                    <button onclick="alert('Você entrou no grupo de Esportes!')" class="text-xs font-bold text-purple-700 hover:underline cursor-pointer">Participar →</button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-mug-hot"></i></div>
+                    <h3 class="font-bold text-slate-900">Café & Bate-Papo</h3>
+                    <p class="text-xs text-slate-600">Grupos regionais para marcar cafés presenciais em locais com certificação de acessibilidade.</p>
+                    <button onclick="alert('Você entrou no grupo de Café!')" class="text-xs font-bold text-purple-700 hover:underline cursor-pointer">Participar →</button>
+                </div>
+            </div>
+
+            <!-- Lista de Membros para Amizade -->
+            <div class="space-y-4 pt-4">
+                <h3 class="text-xl font-bold text-slate-900">Membros Abertos a Novas Amizades</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="amigos-grid"></div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 2: EXPLORAR ================= -->
+        <section id="page-explorar" class="page-content hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-sliders text-purple-600"></i> Filtros Avançados de Acessibilidade</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Gênero</label>
+                        <select id="filter-gender" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm">
+                            <option value="todos">Todos</option>
+                            <option value="Feminino">Mulheres</option>
+                            <option value="Masculino">Homens</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tipo de Deficiência</label>
+                        <select id="filter-disability" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm">
+                            <option value="todas">Todas</option>
+                            <option value="motora">Física / Motora</option>
+                            <option value="visual">Visual</option>
+                            <option value="auditiva">Auditiva</option>
+                            <option value="neuro">Neurodivergente</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Distância Máxima</label>
+                        <select class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm">
+                            <option>Até 10 km</option>
+                            <option>Até 30 km</option>
+                            <option>Até 50 km</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="applyExplorarFilters()" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold p-2.5 rounded-lg shadow-md transition cursor-pointer">Filtrar Perfis</button>
+                    </div>
+                </div>
+            </div>
+            <div id="explorar-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+        <!-- ================= PÁGINA 3: CHATS & MENSAGENS ================= -->
+        <section id="page-chats" class="page-content hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-3 min-h-[550px]">
+                
+                <!-- Lista de Contatos / Conversas -->
+                <div class="border-r border-slate-200 p-4 space-y-4 bg-slate-50">
+                    <h2 class="text-lg font-bold text-slate-900 flex justify-between items-center">
+                        <span>Minhas Conexões</span>
+                        <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-0.5 rounded-full font-bold">3 Ativas</span>
+                    </h2>
+
+                    <div class="space-y-2" id="chat-list-container">
+                        <div onclick="selectChat(1)" id="chat-item-1" class="chat-item bg-white p-3 rounded-xl border border-purple-300 shadow-sm cursor-pointer flex items-center gap-3 hover:bg-purple-50/50 transition">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" class="w-12 h-12 rounded-full object-cover border-2 border-purple-500">
+                            <div class="flex-grow min-w-0">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-bold text-slate-900 text-sm truncate">Camila Santos</h4>
+                                    <span class="text-[10px] text-slate-400">14:20</span>
+                                </div>
+                                <p class="text-xs text-purple-700 font-medium truncate"><i class="fa-solid fa-microphone mr-1"></i> Áudio (0:15) enviado</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectChat(2)" id="chat-item-2" class="chat-item bg-white p-3 rounded-xl border border-slate-200 cursor-pointer flex items-center gap-3 hover:bg-purple-50/50 transition">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200" class="w-12 h-12 rounded-full object-cover">
+                            <div class="flex-grow min-w-0">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-bold text-slate-900 text-sm truncate">Lucas Mendes</h4>
+                                    <span class="text-[10px] text-slate-400">Ontem</span>
+                                </div>
+                                <p class="text-xs text-slate-500 truncate">Adorei a sugestão do parque!</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectChat(3)" id="chat-item-3" class="chat-item bg-white p-3 rounded-xl border border-slate-200 cursor-pointer flex items-center gap-3 hover:bg-purple-50/50 transition">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" class="w-12 h-12 rounded-full object-cover">
+                            <div class="flex-grow min-w-0">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-bold text-slate-900 text-sm truncate">Mariana Lima</h4>
+                                    <span class="text-[10px] text-slate-400">Seg</span>
+                                </div>
+                                <p class="text-xs text-slate-500 truncate">Você usa Libras também?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel da Janela de Chat Ativa -->
+                <div class="lg:col-span-2 flex flex-col justify-between bg-white">
+                    <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/80">
+                        <div class="flex items-center gap-3">
+                            <img id="active-chat-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h3 id="active-chat-name" class="font-bold text-slate-900 text-sm">Camila Santos</h3>
+                                <span class="text-[11px] text-emerald-600 flex items-center gap-1 font-medium"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Online no Conecta+</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="alert('Iniciando Videochamada Acessível com Suporte em Libras/Legendas...')" class="p-2 text-purple-700 hover:bg-purple-100 rounded-full transition cursor-pointer" title="Videochamada Acessível">
+                                <i class="fa-solid fa-video text-lg"></i>
+                            </button>
+                            <button class="p-2 text-slate-600 hover:bg-slate-200 rounded-full cursor-pointer" title="Opções"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Mensagens do Chat -->
+                    <div id="messages-container" class="p-4 space-y-4 overflow-y-auto max-h-[380px] min-h-[300px]">
+                        <div class="flex flex-col items-start">
+                            <div class="bg-slate-100 p-3.5 rounded-2xl rounded-tl-none max-w-xs text-xs text-slate-800 space-y-1 shadow-sm">
+                                <p>Olá! Tudo bem? Vi que você gosta de passeios ao ar livre e literatura.</p>
+                                <span class="text-[9px] text-slate-400 block text-right">14:15</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-end">
+                            <div class="bg-purple-700 text-white p-3.5 rounded-2xl rounded-tr-none max-w-xs text-xs space-y-1 shadow-sm">
+                                <p>Tudo ótimo! Sim, adoraria tomar um café num local bem acessível.</p>
+                                <span class="text-[9px] text-purple-200 block text-right">14:18</span>
+                            </div>
+                        </div>
+
+                        <!-- Player de Áudio Simulado com Transcrição Automática -->
+                        <div class="flex flex-col items-start">
+                            <div class="bg-slate-100 p-3.5 rounded-2xl rounded-tl-none max-w-xs text-xs text-slate-800 space-y-2 shadow-sm border border-purple-100">
+                                <div class="flex items-center gap-2">
+                                    <button onclick="playAudioSimulation()" class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-md cursor-pointer">
+                                        <i id="audio-play-icon" class="fa-solid fa-play text-xs"></i>
+                                    </button>
+                                    <div class="flex-grow">
+                                        <div class="h-1.5 bg-slate-300 rounded-full overflow-hidden">
+                                            <div id="audio-progress" class="w-0 h-full bg-purple-600 transition-all duration-300"></div>
+                                        </div>
+                                        <span class="text-[9px] text-slate-500">Áudio (0:15)</span>
+                                    </div>
+                                </div>
+                                <p class="text-[10px] text-slate-600 italic bg-white p-2 rounded-lg border border-slate-200">
+                                    <i class="fa-solid fa-quote-left mr-1 text-purple-500"></i> Transcrição automática: "Gravando áudio para te desejar uma ótima tarde!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulário de Envio -->
+                    <div class="p-4 border-t border-slate-200 bg-slate-50">
+                        <form onsubmit="sendMessage(event)" class="flex items-center gap-2">
+                            <button type="button" onclick="recordAudioSimulation()" class="text-slate-500 hover:text-purple-600 p-2.5 rounded-full hover:bg-slate-200 cursor-pointer" title="Gravar Áudio">
+                                <i class="fa-solid fa-microphone text-lg"></i>
+                            </button>
+                            <input type="text" id="chat-input" placeholder="Digite sua mensagem adaptada..." required class="flex-grow bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-purple-500 shadow-sm">
+                            <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white p-2.5 rounded-xl transition font-bold px-4 shadow-md cursor-pointer">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 4: MEU PERFIL ================= -->
+        <section id="page-perfil" class="page-content hidden space-y-8">
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm max-w-3xl mx-auto space-y-6">
+                
+                <div class="flex flex-col sm:flex-row items-center gap-6 border-b border-slate-200 pb-6 text-center sm:text-left">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300" class="w-28 h-28 rounded-full object-cover border-4 border-purple-600 shadow-md">
+                        <button onclick="alert('Abra seu gerenciador para escolher uma nova imagem!')" class="absolute bottom-0 right-0 bg-purple-700 hover:bg-purple-800 text-white p-2.5 rounded-full text-xs shadow-md cursor-pointer" title="Alterar Foto">
+                            <i class="fa-solid fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-1">
+                        <h2 class="text-2xl font-bold text-slate-900">Seu Perfil Conecta+</h2>
+                        <p class="text-xs text-slate-500">Gerencie suas preferências de acessibilidade e informações visíveis</p>
+                    </div>
+                </div>
+
+                <form class="space-y-5" onsubmit="event.preventDefault(); alert('Perfil Conecta+ atualizado com sucesso!');">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nome Completo</label>
+                            <input type="text" value="Alexandre Silva" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Idade</label>
+                            <input type="number" value="30" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Biografia Resumida</label>
+                        <textarea rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500">Desenvolvedor de software, PCD visual, amante de boa música e passeios ao ar livre.</textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Preferências de Comunicação</label>
+                        <div class="flex flex-wrap gap-4 pt-1">
+                            <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                                <input type="checkbox" checked class="rounded text-purple-600 w-4 h-4"> Leitor de Tela / Texto
+                            </label>
+                            <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                                <input type="checkbox" checked class="rounded text-purple-600 w-4 h-4"> Mensagens de Áudio
+                            </label>
+                            <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                                <input type="checkbox" class="rounded text-purple-600 w-4 h-4"> Comunicação em Libras
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-3.5 rounded-xl transition shadow-md text-sm cursor-pointer">
+                        Salvar Alterações
+                    </button>
+                </form>
+
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 5: EVENTOS INCLUSIVOS ================= -->
+        <section id="page-eventos" class="page-content hidden space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">Encontros e Eventos 100% Acessíveis</h2>
+                <p class="text-slate-600 text-sm">Participe de workshops, saraus e encontros comunitários organizados com acessibilidade física e sensorial.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=300" class="w-full md:w-40 h-40 object-cover">
+                    <div class="p-4 space-y-2 flex-grow">
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Entrada Gratuita</span>
+                        <h3 class="font-bold text-slate-900">Sarau Inclusivo & Café com Libras</h3>
+                        <p class="text-xs text-slate-500"><i class="fa-solid fa-calendar mr-1"></i> 15 de Outubro, 15:00 - São Paulo/SP</p>
+                        <p class="text-xs text-slate-600">Com intérpretes de Libras e espaço com rampas e piso tátil.</p>
+                        <button onclick="alert('Inscrição confirmada para o evento Conecta+!')" class="text-xs font-bold text-purple-700 hover:underline cursor-pointer">Garantir Vaga →</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1517457210348-703079e57d4b?auto=format&fit=crop&q=80&w=300" class="w-full md:w-40 h-40 object-cover">
+                    <div class="p-4 space-y-2 flex-grow">
+                        <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Presencial</span>
+                        <h3 class="font-bold text-slate-900">Passeio Adaptado no Parque Ibirapuera</h3>
+                        <p class="text-xs text-slate-500"><i class="fa-solid fa-calendar mr-1"></i> 22 de Outubro, 09:00 - São Paulo/SP</p>
+                        <p class="text-xs text-slate-600">Bicicletas adaptadas e guia especializado em acessibilidade.</p>
+                        <button onclick="alert('Inscrição confirmada para o evento Conecta+!')" class="text-xs font-bold text-purple-700 hover:underline cursor-pointer">Garantir Vaga →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 6: LOCAIS INCLUSIVOS ================= -->
+        <section id="page-locais" class="page-content hidden space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">Guia de Locais Parceiros Acessíveis</h2>
+                <p class="text-slate-600 text-sm">Cafés, parques e cinemas com estrutura adaptada para o seu primeiro encontro com segurança.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=400" class="w-full h-36 object-cover rounded-xl">
+                    <h3 class="font-bold text-slate-900">Café Acessível Jardins</h3>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">Rampa de Acesso</span>
+                        <span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">Cardápio em Braille</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Alameda Santos, 1200 - SP</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=400" class="w-full h-36 object-cover rounded-xl">
+                    <h3 class="font-bold text-slate-900">CineArte Inclusivo</h3>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">Audiodescrição</span>
+                        <span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">Legenda Descritiva</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Rua Augusta, 500 - SP</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&q=80&w=400" class="w-full h-36 object-cover rounded-xl">
+                    <h3 class="font-bold text-slate-900">Parque Botânico Adaptado</h3>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">Piso Tátil</span>
+                        <span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">Banheiros PCD</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Av. Brasil, 3000 - SP</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 7: RECURSOS ================= -->
+        <section id="page-recursos" class="page-content hidden space-y-6">
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-2xl font-bold text-slate-900">Central de Recursos PCD Conecta+</h2>
+                <p class="text-slate-600 text-sm">Ferramentas de navegação assistida e guias de acessibilidade integrados.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 bg-purple-50 rounded-2xl border border-purple-100 space-y-2">
+                        <h3 class="font-bold text-purple-900 text-sm"><i class="fa-solid fa-universal-access mr-2"></i>Leitor de Tela Nativo</h3>
+                        <p class="text-xs text-slate-600">Acesse a barra superior e clique em "Ler Página (Voz)" para ouvir todo o conteúdo em áudio.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 space-y-2">
+                        <h3 class="font-bold text-emerald-900 text-sm"><i class="fa-solid fa-hands-asl-interpreting mr-2"></i>Suporte em Libras</h3>
+                        <p class="text-xs text-slate-600">Atendimento em videochamada por intérpretes parceiros da comunidade surda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 8: SOBRE NÓS ================= -->
+        <section id="page-sobre" class="page-content hidden space-y-8">
+            <div class="bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-8">
+                
+                <div class="text-center space-y-3">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">
+                        <i class="fa-solid fa-heart text-pink-600"></i> Manifesto Conecta+
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Sobre o Conecta+</h2>
+                    <p class="text-slate-600 text-base max-w-2xl mx-auto">
+                        Transformando a maneira como Pessoas com Deficiência (PCD) constroem laços afetivos, amizades e vivenciam a inclusão social no ambiente digital.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg">Nossa Missão</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Criar um ecossistema digital seguro, empático e 100% acessível onde barreiras físicas e comunicacionais deixam de existir. Queremos que cada usuário encontre um espaço genuíno para expressar sua identidade, seja através de leitores de tela, tradução em Libras ou perfis verificados.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-pink-600 text-white flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg">Nossa Visão & Valores</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Acreditamos que o amor e a amizade são direitos universais. Pautamos nosso desenvolvimento na autonomia do usuário, respeito à diversidade funcional, sigilo de dados rigoroso e combate implacável a qualquer forma de preconceito ou capacitismo.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-900 to-slate-900 text-white p-8 rounded-2xl space-y-4">
+                    <h3 class="text-xl font-black flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap text-emerald-400"></i> Contexto Acadêmico & Tecnológico
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        O <strong>Conecta+</strong> foi idealizado e construído como parte da entrega acadêmica de referência para a disciplina de Front-End para Web na UNICID (2026). O projeto alia conceitos avançados de acessibilidade web (Diretrizes WCAG), design responsivo com Tailwind CSS, semântica HTML5 rigorosa e interatividade fluida via JavaScript moderno para entregar uma experiência de alto padrão.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="bg-white/10 text-purple-300 text-xs px-3 py-1 rounded-full font-medium">WCAG 2.1 AA Compliant</span>
+                        <span class="bg-white/10 text-pink-300 text-xs px-3 py-1 rounded-full font-medium">Single Page Application (SPA)</span>
+                        <span class="bg-white/10 text-emerald-300 text-xs px-3 py-1 rounded-full font-medium">Inclusão Social Ativa</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 9: PLANOS ================= -->
+        <section id="page-planos" class="page-content hidden space-y-6">
+            <div class="text-center space-y-2 max-w-xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-900">Planos e Parcerias</h2>
+                <p class="text-slate-600 text-sm">Acesso totalmente gratuito para PCDs, com opções premium para impulsionar conexões.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-slate-900">Gratuito PCD</h3>
+                        <p class="text-3xl font-black text-slate-900">R$ 0</p>
+                        <ul class="text-xs text-slate-600 space-y-2 text-left pt-2">
+                            <li>✓ Likes e Matches Ilimitados</li>
+                            <li>✓ Recursos de Acessibilidade Nativos</li>
+                            <li>✓ Chat e Envio de Áudio com Transcrição</li>
+                        </ul>
+                    </div>
+                    <button class="w-full bg-slate-100 font-bold p-2.5 rounded-lg text-xs text-slate-600">Seu Plano Atual</button>
+                </div>
+
+                <div class="bg-purple-900 text-white p-6 rounded-2xl shadow-lg text-center space-y-4 relative border-2 border-purple-500 flex flex-col justify-between">
+                    <span class="absolute -top-3 right-4 bg-pink-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">Recomendado</span>
+                    <div class="space-y-2">
+                        <h3 class="font-bold">Acessibilidade Premium</h3>
+                        <p class="text-3xl font-black">R$ 14,90<span class="text-xs font-normal">/mês</span></p>
+                        <ul class="text-xs text-purple-200 space-y-2 text-left pt-2">
+                            <li>✓ Ver quem curtiu seu perfil no Conecta+</li>
+                            <li>✓ Destaque prioritário nos filtros regionais</li>
+                            <li>✓ Descontos exclusivos em Locais Parceiros</li>
+                        </ul>
+                    </div>
+                    <button onclick="alert('Assinatura Premium ativada no Conecta+!')" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 font-bold p-2.5 rounded-lg text-xs text-white shadow-md cursor-pointer">Assinar Premium</button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-slate-900">Parceiro Inclusivo</h3>
+                        <p class="text-3xl font-black text-slate-900">Empresas</p>
+                        <ul class="text-xs text-slate-600 space-y-2 text-left pt-2">
+                            <li>✓ Cadastrar estabelecimento acessível</li>
+                            <li>✓ Selo de Acessibilidade Verificada</li>
+                            <li>✓ Divulgação de eventos inclusivos</li>
+                        </ul>
+                    </div>
+                    <button onclick="alert('Redirecionando para cadastro de empresas!')" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold p-2.5 rounded-lg text-xs cursor-pointer">Cadastrar Empresa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 10: CONTATO & SUPORTE ================= -->
+        <section id="page-contato" class="page-content hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-8">
+                
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-black text-slate-900">Atendimento & Suporte Conecta+</h2>
+                    <p class="text-slate-600 text-sm">Canais abertos para dúvidas, sugestões, denúncias ou suporte de acessibilidade.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 text-center space-y-2 shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-hands-asl-interpreting"></i></div>
+                        <h3 class="font-bold text-sm">Suporte em Libras</h3>
+                        <p class="text-xs text-slate-500">Videochamada com intérprete certificado.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 text-center space-y-2 shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-envelope"></i></div>
+                        <h3 class="font-bold text-sm">E-mail Direto</h3>
+                        <p class="text-xs text-slate-500">suporte@conectamais.com.br</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 text-center space-y-2 shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-phone"></i></div>
+                        <h3 class="font-bold text-sm">Atendimento por Voz</h3>
+                        <p class="text-xs text-slate-500">0800 770 CONECTA (2663)</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-md">
+                    <form id="form-contato" class="space-y-4" novalidate>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="nome">Seu Nome Completo *</label>
+                                <input type="text" id="nome" aria-describedby="erro-nome" required placeholder="Digite seu nome" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500">
+                                <span id="erro-nome" role="alert" class="text-red-600 text-xs font-semibold mt-1 block"></span>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="email">E-mail para Resposta *</label>
+                                <input type="email" id="email" aria-describedby="erro-email" required placeholder="seuemail@exemplo.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500">
+                                <span id="erro-email" role="alert" class="text-red-600 text-xs font-semibold mt-1 block"></span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="assunto">Assunto da Mensagem *</label>
+                            <select id="assunto" aria-describedby="erro-assunto" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500">
+                                <option value="">Selecione o assunto...</option>
+                                <option>Dúvidas sobre o funcionamento</option>
+                                <option>Solicitação de Suporte em Libras</option>
+                                <option>Sugestão de Local Acessível</option>
+                                <option>Relato de Inacessibilidade ou Bug</option>
+                                <option>Outros Assuntos</option>
+                            </select>
+                            <span id="erro-assunto" role="alert" class="text-red-600 text-xs font-semibold mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="mensagem">Sua Mensagem *</label>
+                            <textarea id="mensagem" aria-describedby="erro-mensagem" rows="4" required placeholder="Escreva aqui detalhadamente sua dúvida ou sugestão..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500"></textarea>
+                            <span id="erro-mensagem" role="alert" class="text-red-600 text-xs font-semibold mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-700 mb-2">Preferência de Resposta</label>
+                            <div class="flex flex-wrap gap-4 text-xs font-medium text-slate-700">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="rounded text-purple-600"> E-mail com Texto</label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-purple-600"> Resposta em Áudio</label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-purple-600"> Chamada em Libras</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-700 to-pink-600 hover:from-purple-800 hover:to-pink-700 text-white font-bold py-3.5 rounded-xl shadow-md transition cursor-pointer">
+                            Enviar Mensagem para o Conecta+
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ COMPLETO -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-12 py-8 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-bold text-white text-sm">Conecta+ - Amor e Inclusão Sem Barreiras</p>
+                <p>© 2026 - Entrega Acadêmica A2 Front-End para Web (UNICID).</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="showPage('sobre')" class="hover:text-white underline cursor-pointer">Sobre</button>
+                <button onclick="showPage('recursos')" class="hover:text-white underline cursor-pointer">Acessibilidade</button>
+                <button onclick="showPage('contato')" class="hover:text-white underline cursor-pointer">Suporte</button>
+            </div>
+        </div>
+    </footer>
+
+        <!-- SCRIPT EXTERNO DE INTERATIVIDADE -->
+    <script src="js/interatividade.js"></script>
+</body>
+</html>

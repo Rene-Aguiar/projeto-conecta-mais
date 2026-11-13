@@ -1,0 +1,9 @@
+---
+description: Visão geral e plano de contexto do projeto Conecta+
+globs: *
+alwaysApply: true
+---
+# Visão geral - Conecta+
+- Plataforma inclusiva de encontros, amizades e inclusão social para Pessoas com Deficiência (PCD).
+- Stack: HTML5 estruturado, Tailwind CSS via CDN, CSS customizado de acessibilidade e JavaScript externo.
+- Foco em acessibilidade (WCAG AA), navegação por teclado e semântica validada.
