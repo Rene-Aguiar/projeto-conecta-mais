@@ -34,3 +34,5 @@ O desenvolvimento do Conecta+ envolve a criação de uma interface web, com foco
 1. Clone este repositório em sua máquina:
    ```bash
    git clone [https://github.com/Rene-Aguiar/projeto-conecta-mais.git](https://github.com/Rene-Aguiar/projeto-conecta-mais.git)
+
+URL Site: https://conectamais-kappa.vercel.app
